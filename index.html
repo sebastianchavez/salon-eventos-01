@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aurum·Salón — Donde los momentos extraordinarios cobran vida</title>
+  <meta name="description" content="Salón de eventos premium. Bodas, corporativos, cumpleaños y más. Reserva online en minutos." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: { DEFAULT: '#c9a55c', light: '#e6c887', dark: '#8a7236' },
+            ink: { DEFAULT: '#0f0f10', alt: '#1a1a1c', soft: '#242427', elev: '#2a2a2d' }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body class="bg-base text-text">
+  <header id="navbar"></header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero-bg flex items-center">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
+        <div class="max-w-3xl fade-in">
+          <span class="eyebrow shimmer">SALÓN DE EVENTOS · DESDE 2010</span>
+          <h1 class="font-serif text-5xl md:text-7xl font-bold leading-tight mb-6">
+            Donde los momentos
+            <span class="text-gold italic">extraordinarios</span>
+            cobran vida
+          </h1>
+          <p class="text-lg md:text-xl text-muted mb-8 leading-relaxed">
+            Un espacio diseñado para que cada celebración sea única. Bodas, eventos corporativos,
+            cumpleaños y aniversarios con atención personalizada y servicios de primer nivel.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href="pages/reservation.html" class="btn btn-primary">
+              <i data-lucide="calendar-check" class="w-5 h-5"></i>
+              Reservar ahora
+            </a>
+            <a href="pages/services.html" class="btn btn-outline">
+              Ver servicios
+              <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+          </div>
+
+          <div class="grid grid-cols-3 gap-4 mt-12 max-w-2xl">
+            <div class="stat-card card">
+              <div class="stat-number">14+</div>
+              <div class="stat-label">Años</div>
+            </div>
+            <div class="stat-card card">
+              <div class="stat-number">2.5K</div>
+              <div class="stat-label">Eventos</div>
+            </div>
+            <div class="stat-card card">
+              <div class="stat-number">250</div>
+              <div class="stat-label">Capacidad</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PACKAGES PREVIEW -->
+    <section class="py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14 scroll-reveal">
+          <span class="eyebrow">PAQUETES DESTACADOS</span>
+          <h2 class="section-title">Elige el plan ideal para tu evento</h2>
+          <p class="text-muted max-w-2xl mx-auto">Tres propuestas diseñadas para distintos momentos, todas con la calidad y elegancia que nos caracteriza.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="card p-8 flex flex-col scroll-reveal">
+            <span class="eyebrow">ÍNTIMO</span>
+            <h3 class="font-serif text-2xl mb-2">Aurum Esencial</h3>
+            <div class="price-tag mb-4">S/ 5,200</div>
+            <p class="text-muted text-sm mb-6">Perfecto para reuniones íntimas y cumpleaños especiales.</p>
+            <ul class="space-y-2 text-sm text-muted mb-6 flex-1">
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>Salón íntimo (hasta 80 pers.)</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>Catering básico</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>Decoración clásica</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>Coordinación del evento</li>
+            </ul>
+            <a href="pages/reservation.html" class="btn btn-outline">Seleccionar</a>
+          </div>
+
+          <div class="card p-8 flex flex-col border-gold relative scroll-reveal" style="border-color: var(--color-gold); transform: translateY(-8px);">
+            <span class="absolute -top-3 left-1/2 -translate-x-1/2 badge badge-paid !text-xs">MÁS POPULAR</span>
+            <span class="eyebrow">PREMIUM</span>
+            <h3 class="font-serif text-2xl mb-2">Aurum Signature</h3>
+            <div class="price-tag mb-4">S/ 12,800</div>
+            <p class="text-muted text-sm mb-6">La elección favorita para bodas y eventos corporativos.</p>
+            <ul class="space-y-2 text-sm text-muted mb-6 flex-1">
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>Salón premium (hasta 250 pers.)</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>Catering buffet premium</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>Decoración temática</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>DJ + Fotografía</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>Barra de cócteles</li>
+            </ul>
+            <a href="pages/reservation.html" class="btn btn-primary">Seleccionar</a>
+          </div>
+
+          <div class="card p-8 flex flex-col scroll-reveal">
+            <span class="eyebrow">LUXURY</span>
+            <h3 class="font-serif text-2xl mb-2">Aurum Imperial</h3>
+            <div class="price-tag mb-4">S/ 28,500</div>
+            <p class="text-muted text-sm mb-6">Servicio todo incluido para eventos sin precedentes.</p>
+            <ul class="space-y-2 text-sm text-muted mb-6 flex-1">
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>Salón premium exclusivo</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>Catering plato servido</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>Decoración personalizada</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>Banda en vivo</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-gold flex-shrink-0 mt-0.5"></i>Foto + Video + Drone</li>
+            </ul>
+            <a href="pages/reservation.html" class="btn btn-outline">Seleccionar</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES PREVIEW -->
+    <section class="py-20 bg-alt">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 scroll-reveal">
+          <div>
+            <span class="eyebrow">NUESTROS SERVICIOS</span>
+            <h2 class="section-title">Todo lo que tu evento necesita</h2>
+          </div>
+          <a href="pages/services.html" class="text-gold hover:text-gold-light inline-flex items-center gap-2 text-sm font-medium">
+            Ver catálogo completo
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="card p-6 text-center scroll-reveal">
+            <i data-lucide="building" class="w-10 h-10 text-gold mx-auto mb-3"></i>
+            <h4 class="font-serif text-lg mb-1">Alquiler</h4>
+            <p class="text-xs text-muted">Salón premium e íntimo</p>
+          </div>
+          <div class="card p-6 text-center scroll-reveal">
+            <i data-lucide="utensils" class="w-10 h-10 text-gold mx-auto mb-3"></i>
+            <h4 class="font-serif text-lg mb-1">Catering</h4>
+            <p class="text-xs text-muted">Buffet y plato servido</p>
+          </div>
+          <div class="card p-6 text-center scroll-reveal">
+            <i data-lucide="sparkles" class="w-10 h-10 text-gold mx-auto mb-3"></i>
+            <h4 class="font-serif text-lg mb-1">Decoración</h4>
+            <p class="text-xs text-muted">Clásica y temática</p>
+          </div>
+          <div class="card p-6 text-center scroll-reveal">
+            <i data-lucide="music" class="w-10 h-10 text-gold mx-auto mb-3"></i>
+            <h4 class="font-serif text-lg mb-1">Música</h4>
+            <p class="text-xs text-muted">DJ y bandas en vivo</p>
+          </div>
+          <div class="card p-6 text-center scroll-reveal">
+            <i data-lucide="camera" class="w-10 h-10 text-gold mx-auto mb-3"></i>
+            <h4 class="font-serif text-lg mb-1">Fotografía</h4>
+            <p class="text-xs text-muted">Profesional y video</p>
+          </div>
+          <div class="card p-6 text-center scroll-reveal">
+            <i data-lucide="cake" class="w-10 h-10 text-gold mx-auto mb-3"></i>
+            <h4 class="font-serif text-lg mb-1">Pastelería</h4>
+            <p class="text-xs text-muted">Tortas personalizadas</p>
+          </div>
+          <div class="card p-6 text-center scroll-reveal">
+            <i data-lucide="armchair" class="w-10 h-10 text-gold mx-auto mb-3"></i>
+            <h4 class="font-serif text-lg mb-1">Mobiliario</h4>
+            <p class="text-xs text-muted">Sillas y mesas extra</p>
+          </div>
+          <div class="card p-6 text-center scroll-reveal">
+            <i data-lucide="clipboard-list" class="w-10 h-10 text-gold mx-auto mb-3"></i>
+            <h4 class="font-serif text-lg mb-1">Coordinación</h4>
+            <p class="text-xs text-muted">Asesoría completa</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 scroll-reveal">
+          <span class="eyebrow">TESTIMONIOS</span>
+          <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="testimonial scroll-reveal">
+            <p class="text-muted mb-6 italic leading-relaxed">"Nuestra boda fue un sueño hecho realidad. La atención al detalle del equipo de Aurum superó todas nuestras expectativas."</p>
+            <div class="flex items-center gap-3">
+              <div class="avatar">CR</div>
+              <div>
+                <div class="font-semibold">Carla & Rodrigo</div>
+                <div class="text-xs text-dim">Boda · Octubre 2025</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial scroll-reveal">
+            <p class="text-muted mb-6 italic leading-relaxed">"Organizamos nuestro evento corporativo de fin de año y todo salió perfecto. El salón, el catering y la atención fueron impecables."</p>
+            <div class="flex items-center gap-3">
+              <div class="avatar">JM</div>
+              <div>
+                <div class="font-semibold">Jorge Mendoza</div>
+                <div class="text-xs text-dim">Evento corporativo · 2025</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial scroll-reveal">
+            <p class="text-muted mb-6 italic leading-relaxed">"Celebré mis 15 años y fue mágico. La decoración temática, la música y la coordinación hicieron que fuera un día inolvidable."</p>
+            <div class="flex items-center gap-3">
+              <div class="avatar">AS</div>
+              <div>
+                <div class="font-semibold">Ana Solís</div>
+                <div class="text-xs text-dim">Quinceañera · 2026</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAPA -->
+    <section class="py-20 bg-alt">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          <div class="scroll-reveal">
+            <span class="eyebrow">UBICACIÓN</span>
+            <h2 class="section-title">En el corazón de la ciudad</h2>
+            <p class="text-muted mb-6">Estratégicamente ubicados en una zona de fácil acceso con estacionamiento privado y vigilancia las 24 horas.</p>
+            <div class="space-y-4">
+              <div class="flex gap-3">
+                <i data-lucide="map-pin" class="w-5 h-5 text-gold flex-shrink-0 mt-0.5"></i>
+                <div>
+                  <div class="font-semibold">Dirección</div>
+                  <div class="text-sm text-muted">Av. El Sol 123, Cusco — Perú</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <i data-lucide="phone" class="w-5 h-5 text-gold flex-shrink-0 mt-0.5"></i>
+                <div>
+                  <div class="font-semibold">Teléfono</div>
+                  <div class="text-sm text-muted">+51 84 123 456</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <i data-lucide="clock" class="w-5 h-5 text-gold flex-shrink-0 mt-0.5"></i>
+                <div>
+                  <div class="font-semibold">Horarios</div>
+                  <div class="text-sm text-muted">L-V: 9:00 - 20:00 · Sáb-Dom: 10:00 - 22:00</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-xl overflow-hidden border border-subtle h-80 scroll-reveal">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3879.58.3214!2d-71.97!3d-13.52!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDMxJzEyLjAiUyA3McKwNTgnMTIuMCJX!5e0!3m2!1ses!2spe!4v1700000000000"
+              width="100%" height="100%" style="border:0; filter: invert(0.92) hue-rotate(180deg);" allowfullscreen="" loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="py-20">
+      <div class="max-w-4xl mx-auto px-4 text-center scroll-reveal">
+        <span class="eyebrow">¿LISTO PARA EMPEZAR?</span>
+        <h2 class="section-title mb-4">Reserva tu fecha en pocos minutos</h2>
+        <p class="text-muted mb-8 max-w-2xl mx-auto">Sin compromiso, sin llamadas. Elige fecha, servicios y paga en línea de forma segura.</p>
+        <a href="pages/reservation.html" class="btn btn-primary !py-4 !px-8 text-base">
+          <i data-lucide="calendar-check" class="w-5 h-5"></i>
+          Reservar mi evento
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/reservations.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    initLayout('index');
+  </script>
+</body>
+</html>

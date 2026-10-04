@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iniciar sesión · Aurum·Salón</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { gold: { DEFAULT: '#c9a55c', light: '#e6c887', dark: '#8a7236' }, ink: { DEFAULT: '#0f0f10', alt: '#1a1a1c', soft: '#242427', elev: '#2a2a2d' } }, fontFamily: { serif: ['Playfair Display', 'Georgia', 'serif'], sans: ['Inter', 'system-ui', 'sans-serif'] } } }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <style>
+    .auth-bg {
+      min-height: 100vh;
+      background:
+        linear-gradient(135deg, rgba(15,15,16,0.95), rgba(15,15,16,0.85)),
+        url('https://images.unsplash.com/photo-1530023367847-a683933f4172?w=1920&q=80') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+  </style>
+</head>
+<body class="bg-base text-text">
+  <main class="auth-bg">
+    <div class="w-full max-w-md">
+      <a href="../index.html" class="brand-mark justify-center mb-8">
+        <i data-lucide="crown" class="w-7 h-7 text-gold"></i>
+        <span>Aurum<span>·Salón</span></span>
+      </a>
+
+      <div class="card-glass p-8 fade-in">
+        <div class="text-center mb-6">
+          <h1 class="font-serif text-3xl font-bold mb-2">Bienvenido de vuelta</h1>
+          <p class="text-sm text-muted">Ingresa para gestionar tus reservas</p>
+        </div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label class="form-label">Correo electrónico</label>
+            <input type="email" id="email" class="input-elegant" placeholder="tu@email.com" required />
+            <div class="form-error"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Contraseña</label>
+            <div class="relative">
+              <input type="password" id="password" class="input-elegant pr-10" placeholder="••••••••" required />
+              <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-gold" onclick="togglePassword('password', this)">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
+            <div class="form-error"></div>
+          </div>
+
+          <div class="flex items-center justify-between mb-6">
+            <label class="flex items-center gap-2 text-sm cursor-pointer">
+              <input type="checkbox" id="remember" class="checkbox-gold" />
+              <span class="text-muted">Recordarme</span>
+            </label>
+            <a href="forgot-password.html" class="text-sm text-gold hover:text-gold-light">¿Olvidaste tu contraseña?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-full !py-3">
+            <i data-lucide="log-in" class="w-4 h-4"></i>
+            Iniciar sesión
+          </button>
+        </form>
+
+        <div class="divider-gold my-6"></div>
+
+        <p class="text-center text-sm text-muted">
+          ¿No tienes cuenta? <a href="register.html" class="text-gold hover:text-gold-light font-semibold">Regístrate</a>
+        </p>
+      </div>
+
+      <div class="mt-6 p-4 rounded-lg border border-subtle bg-alt">
+        <p class="text-xs text-dim mb-2"><strong class="text-gold">Usuario demo:</strong></p>
+        <p class="text-xs text-muted">📧 demo@salon.com · 🔑 demo123</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    function togglePassword(id, btn) {
+      const input = document.getElementById(id);
+      const isPwd = input.type === 'password';
+      input.type = isPwd ? 'text' : 'password';
+      btn.innerHTML = `<i data-lucide="${isPwd ? 'eye-off' : 'eye'}" class="w-4 h-4"></i>`;
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      seedData();
+
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('registered') === '1') {
+        showToast('¡Registro exitoso! Inicia sesión con tus credenciales.', 'success');
+      }
+
+      document.getElementById('loginForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        clearErrors(e.target);
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+
+        const result = loginUser(email.value, password.value);
+        if (result.ok) {
+          showToast('¡Bienvenido!', 'success', 1000);
+          setTimeout(() => { window.location.href = 'profile.html'; }, 600);
+        } else {
+          setFieldError(password.closest('.form-group'), result.error);
+        }
+      });
+
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

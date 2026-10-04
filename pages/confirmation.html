@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reserva confirmada · Aurum·Salón</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { gold: { DEFAULT: '#c9a55c', light: '#e6c887', dark: '#8a7236' }, ink: { DEFAULT: '#0f0f10', alt: '#1a1a1c', soft: '#242427', elev: '#2a2a2d' } }, fontFamily: { serif: ['Playfair Display', 'Georgia', 'serif'], sans: ['Inter', 'system-ui', 'sans-serif'] } } }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body class="bg-base text-text">
+  <header id="navbar"></header>
+
+  <main class="py-12">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- ICONO ÉXITO -->
+      <div class="text-center mb-8 scale-in">
+        <div class="inline-flex items-center justify-center w-24 h-24 rounded-full mb-6" style="background: radial-gradient(circle, rgba(201,165,92,0.25), transparent);">
+          <div class="w-20 h-20 rounded-full flex items-center justify-center" style="background: var(--color-gold); box-shadow: 0 0 0 8px rgba(201, 165, 92, 0.15);">
+            <i data-lucide="check" class="w-12 h-12" style="color: #1a1a1c;"></i>
+          </div>
+        </div>
+        <span class="eyebrow">¡RESERBA CONFIRMADA!</span>
+        <h1 class="font-serif text-4xl md:text-5xl font-bold mb-3">Tu evento está <span class="text-gold italic">asegurado</span></h1>
+        <p class="text-muted max-w-xl mx-auto">Hemos registrado tu solicitud. Tienes <strong class="text-gold">48 horas</strong> para completar el pago y confirmar definitivamente tu fecha.</p>
+      </div>
+
+      <!-- CÓDIGO DESTACADO -->
+      <div class="card-glass p-6 text-center mb-6 fade-in">
+        <span class="text-xs text-dim uppercase tracking-wider">Código de reserva</span>
+        <div class="font-serif text-3xl md:text-4xl text-gold font-bold mt-2 tracking-wider" id="reservationId">RES-———————</div>
+        <p class="text-xs text-muted mt-2">Guarda este código para futuras consultas</p>
+      </div>
+
+      <!-- RESUMEN -->
+      <div class="card p-8 mb-6 fade-in delay-1">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="font-serif text-2xl">Resumen de la reserva</h2>
+          <span class="badge badge-pending" id="statusBadge">Pendiente de pago</span>
+        </div>
+
+        <div id="reservationDetails" class="space-y-6"></div>
+      </div>
+
+      <!-- PRÓXIMOS PASOS -->
+      <div class="card p-8 mb-6 fade-in delay-2">
+        <h2 class="font-serif text-2xl mb-4">Próximos pasos</h2>
+        <div class="space-y-4">
+          <div class="flex gap-3">
+            <div class="timeline-dot"></div>
+            <div>
+              <h4 class="font-semibold">Realizar el pago</h4>
+              <p class="text-sm text-muted">Completa el pago para confirmar tu fecha. Aceptamos Visa y Mastercard.</p>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <div class="timeline-dot"></div>
+            <div>
+              <h4 class="font-semibold">Coordinación previa</h4>
+              <p class="text-sm text-muted">Te contactaremos 7 días antes del evento para afinar los detalles.</p>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <div class="timeline-dot last"></div>
+            <div>
+              <h4 class="font-semibold">¡Disfruta tu evento!</h4>
+              <p class="text-sm text-muted">Nuestro equipo se encargará de que sea un día perfecto.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCIONES -->
+      <div class="flex flex-col sm:flex-row gap-3 fade-in delay-3">
+        <button class="btn btn-primary flex-1 !py-3" onclick="goToPayment()">
+          <i data-lucide="credit-card" class="w-5 h-5"></i>
+          Proceder al pago
+        </button>
+        <a href="profile.html" class="btn btn-outline flex-1 !py-3">
+          <i data-lucide="list" class="w-5 h-5"></i>
+          Ver mis reservas
+        </a>
+      </div>
+
+      <p class="text-center text-xs text-dim mt-6">
+        ¿Necesitas ayuda? Escríbenos a <a href="mailto:contacto@aurum.com" class="text-gold hover:underline">contacto@aurum.com</a> o llámanos al +51 84 123 456
+      </p>
+    </div>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/reservations.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    let currentReservation = null;
+
+    function loadReservation() {
+      const params = new URLSearchParams(window.location.search);
+      let id = params.get('id');
+      if (!id) id = localStorage.getItem('salon_lastReservationId');
+      if (!id) {
+        document.querySelector('main').innerHTML = `
+          <div class="max-w-md mx-auto text-center py-20">
+            <i data-lucide="alert-circle" class="w-16 h-16 text-red-400 mx-auto mb-4"></i>
+            <h2 class="font-serif text-2xl mb-2">No se encontró la reserva</h2>
+            <p class="text-muted mb-6">Vuelve a la página de reservas para crear una nueva.</p>
+            <a href="reservation.html" class="btn btn-primary">Crear nueva reserva</a>
+          </div>`;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        return;
+      }
+
+      const res = getReservationById(id);
+      if (!res) {
+        document.querySelector('main').innerHTML = `
+          <div class="max-w-md mx-auto text-center py-20">
+            <i data-lucide="alert-circle" class="w-16 h-16 text-red-400 mx-auto mb-4"></i>
+            <h2 class="font-serif text-2xl mb-2">Reserva no encontrada</h2>
+            <a href="profile.html" class="btn btn-primary">Ver mis reservas</a>
+          </div>`;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        return;
+      }
+
+      currentReservation = res;
+      document.getElementById('reservationId').textContent = res.id;
+      document.getElementById('statusBadge').innerHTML = getReservationStatusLabel(res.status);
+
+      const details = document.getElementById('reservationDetails');
+      details.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="flex items-start gap-3">
+            <i data-lucide="calendar" class="w-5 h-5 text-gold mt-0.5"></i>
+            <div>
+              <div class="text-xs text-dim uppercase">Fecha</div>
+              <div class="font-semibold">${formatDate(res.eventDate)}</div>
+              <div class="text-xs text-muted">${res.eventTime} hrs</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <i data-lucide="users" class="w-5 h-5 text-gold mt-0.5"></i>
+            <div>
+              <div class="text-xs text-dim uppercase">Tipo</div>
+              <div class="font-semibold">${getEventTypeLabel(res.eventType)}</div>
+              <div class="text-xs text-muted">${res.guests} invitados</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <i data-lucide="map-pin" class="w-5 h-5 text-gold mt-0.5"></i>
+            <div>
+              <div class="text-xs text-dim uppercase">Lugar</div>
+              <div class="font-semibold">Aurum·Salón</div>
+              <div class="text-xs text-muted">Av. El Sol 123, Cusco</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider-gold"></div>
+
+        <div>
+          <h4 class="text-xs uppercase tracking-wider text-gold mb-3">Servicios contratados</h4>
+          <table class="table-elegant">
+            <thead><tr><th>Servicio</th><th class="text-right">Cant.</th><th class="text-right">Subtotal</th></tr></thead>
+            <tbody>
+              ${res.services.map(s => `
+                <tr>
+                  <td>${s.name}</td>
+                  <td class="text-right">${s.qty}</td>
+                  <td class="text-right font-semibold">${formatCurrency(s.price * s.qty)}</td>
+                </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="summary-box">
+          <div class="summary-row"><span>Subtotal</span><span>${formatCurrency(res.subtotal)}</span></div>
+          <div class="summary-row"><span>IGV (18%)</span><span>${formatCurrency(res.tax)}</span></div>
+          <div class="summary-total"><span>Total a pagar</span><span>${formatCurrency(res.total)}</span></div>
+        </div>
+      `;
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function goToPayment() {
+      if (!currentReservation) return;
+      window.location.href = `payment.html?id=${currentReservation.id}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initLayout('reservation');
+      loadReservation();
+    });
+  </script>
+</body>
+</html>

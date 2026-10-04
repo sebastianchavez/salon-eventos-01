@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reservar · Aurum·Salón</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { gold: { DEFAULT: '#c9a55c', light: '#e6c887', dark: '#8a7236' }, ink: { DEFAULT: '#0f0f10', alt: '#1a1a1c', soft: '#242427', elev: '#2a2a2d' } }, fontFamily: { serif: ['Playfair Display', 'Georgia', 'serif'], sans: ['Inter', 'system-ui', 'sans-serif'] } } }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body class="bg-base text-text">
+  <header id="navbar"></header>
+
+  <main class="py-10">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- HEADER -->
+      <div class="text-center mb-10 fade-in">
+        <span class="eyebrow">RESERVA EN LÍNEA</span>
+        <h1 class="font-serif text-4xl md:text-5xl font-bold mb-3">Reserva tu <span class="text-gold italic">evento</span></h1>
+        <p class="text-muted max-w-2xl mx-auto">Completa los pasos para asegurar tu fecha. Solo te tomará unos minutos.</p>
+      </div>
+
+      <!-- STEPPER -->
+      <div class="stepper mb-10">
+        <div class="step active" data-step="1">
+          <div class="step-circle">1</div>
+          <div class="step-label">Evento</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step" data-step="2">
+          <div class="step-circle">2</div>
+          <div class="step-label">Servicios</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step" data-step="3">
+          <div class="step-circle">3</div>
+          <div class="step-label">Contacto</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step" data-step="4">
+          <div class="step-circle">4</div>
+          <div class="step-label">Resumen</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- FORM -->
+        <div class="lg:col-span-2">
+          <div class="card p-8">
+
+            <!-- PASO 1 -->
+            <div class="wizard-step" data-step="1">
+              <h2 class="font-serif text-2xl mb-1">Datos del evento</h2>
+              <p class="text-sm text-muted mb-6">Cuéntanos sobre tu celebración.</p>
+
+              <div class="form-group">
+                <label class="form-label">Tipo de evento *</label>
+                <select id="eventType" class="select-elegant">
+                  <option value="">Selecciona un tipo</option>
+                  <option value="boda">Boda</option>
+                  <option value="corporativo">Evento Corporativo</option>
+                  <option value="cumpleanos">Cumpleaños</option>
+                  <option value="aniversario">Aniversario</option>
+                  <option value="graduacion">Graduación</option>
+                  <option value="otro">Otro</option>
+                </select>
+                <div class="form-error"></div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="form-group">
+                  <label class="form-label">Fecha del evento *</label>
+                  <input type="date" id="eventDate" class="input-elegant" />
+                  <div class="form-error"></div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Hora *</label>
+                  <input type="time" id="eventTime" class="input-elegant" />
+                  <div class="form-error"></div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Número de invitados *</label>
+                <input type="number" id="guests" class="input-elegant" min="10" max="500" placeholder="Ej. 150" />
+                <div class="form-error"></div>
+              </div>
+
+              <div class="flex justify-end mt-6">
+                <button class="btn btn-primary" onclick="goToStep(2)">Continuar <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+              </div>
+            </div>
+
+            <!-- PASO 2 -->
+            <div class="wizard-step hidden" data-step="2">
+              <h2 class="font-serif text-2xl mb-1">Servicios</h2>
+              <p class="text-sm text-muted mb-6">Selecciona los servicios que necesitas. La cantidad se puede ajustar por persona o unidad.</p>
+
+              <div id="servicesPicker" class="space-y-3"></div>
+
+              <div class="flex justify-between mt-6">
+                <button class="btn btn-ghost" onclick="goToStep(1)"><i data-lucide="arrow-left" class="w-4 h-4"></i> Atrás</button>
+                <button class="btn btn-primary" onclick="goToStep(3)">Continuar <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+              </div>
+            </div>
+
+            <!-- PASO 3 -->
+            <div class="wizard-step hidden" data-step="3">
+              <h2 class="font-serif text-2xl mb-1">Datos de contacto</h2>
+              <p class="text-sm text-muted mb-6">Para enviarte la confirmación y coordinar los detalles.</p>
+
+              <div id="contactFields"></div>
+
+              <div class="form-group">
+                <label class="form-label">Comentarios adicionales</label>
+                <textarea id="notes" class="textarea-elegant" rows="3" placeholder="Detalles especiales, alergias, horarios, etc."></textarea>
+              </div>
+
+              <div class="flex justify-between mt-6">
+                <button class="btn btn-ghost" onclick="goToStep(2)"><i data-lucide="arrow-left" class="w-4 h-4"></i> Atrás</button>
+                <button class="btn btn-primary" onclick="goToStep(4)">Ver resumen <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+              </div>
+            </div>
+
+            <!-- PASO 4 -->
+            <div class="wizard-step hidden" data-step="4">
+              <h2 class="font-serif text-2xl mb-1">Resumen de la reserva</h2>
+              <p class="text-sm text-muted mb-6">Revisa los detalles antes de confirmar.</p>
+
+              <div id="reservationSummary"></div>
+
+              <div class="bg-soft border border-subtle rounded-lg p-4 mt-6 flex items-start gap-3">
+                <i data-lucide="info" class="w-5 h-5 text-gold flex-shrink-0 mt-0.5"></i>
+                <p class="text-sm text-muted">Al confirmar, tu reserva quedará registrada con estado <strong class="text-gold">Pendiente de pago</strong>. Tendrá <strong class="text-text">48 horas</strong> para completar el pago antes de ser liberada.</p>
+              </div>
+
+              <div class="flex justify-between mt-6">
+                <button class="btn btn-ghost" onclick="goToStep(3)"><i data-lucide="arrow-left" class="w-4 h-4"></i> Atrás</button>
+                <button class="btn btn-primary" onclick="confirmReservation()">
+                  <i data-lucide="check-circle" class="w-4 h-4"></i> Confirmar reserva
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESUMEN STICKY -->
+        <aside class="lg:col-span-1">
+          <div class="card p-6 sticky top-20">
+            <h3 class="font-serif text-lg mb-4 flex items-center gap-2">
+              <i data-lucide="receipt" class="w-5 h-5 text-gold"></i>
+              Tu reserva
+            </h3>
+
+            <div id="liveSummary">
+              <p class="text-sm text-dim text-center py-6">Completa los pasos para ver el resumen aquí.</p>
+            </div>
+
+            <div class="divider-gold my-4"></div>
+            <p class="text-xs text-dim text-center">Precios incluyen IGV (18%)</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/reservations.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    let selectedServices = [];
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('eventDate').min = today;
+
+    function getReservationData() {
+      return {
+        eventType: document.getElementById('eventType').value,
+        eventDate: document.getElementById('eventDate').value,
+        eventTime: document.getElementById('eventTime').value,
+        guests: document.getElementById('guests').value,
+        contactInfo: {
+          name: document.getElementById('contactName')?.value || '',
+          email: document.getElementById('contactEmail')?.value || '',
+          phone: document.getElementById('contactPhone')?.value || '',
+          notes: document.getElementById('notes')?.value || ''
+        },
+        services: selectedServices
+      };
+    }
+
+    function renderServicesPicker() {
+      const services = getServicesCatalog();
+      const container = document.getElementById('servicesPicker');
+      const guests = parseInt(document.getElementById('guests').value) || 0;
+
+      container.innerHTML = services.map(s => {
+        const defaultQty = s.unit === 'persona' ? guests : s.unit === 'silla' ? guests : 1;
+        const isSelected = selectedServices.find(x => x.id === s.id);
+        const currentQty = isSelected ? isSelected.qty : 0;
+
+        return `
+          <div class="service-card ${isSelected ? 'selected' : ''}" data-id="${s.id}">
+            <input type="checkbox" class="checkbox-gold mt-1" data-toggle="${s.id}" ${isSelected ? 'checked' : ''} />
+            <div class="flex-1">
+              <div class="flex items-start justify-between gap-2 mb-1">
+                <h4 class="font-serif text-base">${s.name}</h4>
+                <span class="price-tag-sm whitespace-nowrap">${formatCurrency(s.price)}</span>
+              </div>
+              <p class="text-xs text-muted mb-2">${s.description}</p>
+              <div class="flex items-center gap-3">
+                <span class="text-xs text-dim">/ ${s.unit}</span>
+                ${isSelected ? `
+                  <div class="flex items-center gap-2 ml-auto">
+                    <label class="text-xs text-muted">Cantidad:</label>
+                    <input type="number" class="input-elegant !py-1 !px-2 w-20 text-center qty-input" data-id="${s.id}"
+                      min="${s.unit === 'silla' || s.unit === 'persona' ? 1 : 1}" max="${s.unit === 'persona' ? 500 : 999}" />
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.querySelectorAll('.qty-input').forEach(input => {
+        const id = input.dataset.id;
+        const exist = selectedServices.find(x => x.id === id);
+        input.value = exist ? exist.qty : defaultQty;
+        input.addEventListener('input', () => {
+          const q = parseInt(input.value) || 1;
+          const idx = selectedServices.findIndex(x => x.id === id);
+          if (idx >= 0) {
+            selectedServices[idx].qty = q;
+            updateLiveSummary();
+          }
+        });
+      });
+
+      container.querySelectorAll('[data-toggle]').forEach(cb => {
+        cb.addEventListener('change', () => {
+          const id = cb.dataset.toggle;
+          toggleService(id);
+        });
+      });
+    }
+
+    function toggleService(id) {
+      const service = getServiceById(id);
+      if (!service) return;
+      const idx = selectedServices.findIndex(s => s.id === id);
+      const guests = parseInt(document.getElementById('guests').value) || 1;
+
+      if (idx >= 0) {
+        selectedServices.splice(idx, 1);
+      } else {
+        const qty = service.unit === 'persona' || service.unit === 'silla' ? guests : 1;
+        selectedServices.push({ id: service.id, name: service.name, qty, price: service.price });
+      }
+      renderServicesPicker();
+      updateLiveSummary();
+    }
+
+    function updateLiveSummary() {
+      const data = getReservationData();
+      const live = document.getElementById('liveSummary');
+
+      if (!data.eventType && !data.eventDate && selectedServices.length === 0) {
+        live.innerHTML = `<p class="text-sm text-dim text-center py-6">Completa los pasos para ver el resumen aquí.</p>`;
+        return;
+      }
+
+      let html = '';
+      if (data.eventType) html += `<div class="flex justify-between text-sm mb-2"><span class="text-muted">Evento</span><span>${getEventTypeLabel(data.eventType)}</span></div>`;
+      if (data.eventDate) html += `<div class="flex justify-between text-sm mb-2"><span class="text-muted">Fecha</span><span>${formatDate(data.eventDate)}${data.eventTime ? ' · ' + data.eventTime : ''}</span></div>`;
+      if (data.guests) html += `<div class="flex justify-between text-sm mb-2"><span class="text-muted">Invitados</span><span>${data.guests}</span></div>`;
+
+      if (selectedServices.length) {
+        const totals = calculateTotal(selectedServices);
+        html += `<div class="divider-gold my-3"></div>`;
+        html += `<div class="space-y-1 mb-3">`;
+        selectedServices.forEach(s => {
+          html += `<div class="flex justify-between text-xs"><span class="text-muted truncate pr-2">${s.qty}× ${s.name}</span><span class="whitespace-nowrap">${formatCurrency(s.price * s.qty)}</span></div>`;
+        });
+        html += `</div>`;
+        html += `
+          <div class="space-y-1 pt-2 border-t border-subtle">
+            <div class="flex justify-between text-xs text-muted"><span>Subtotal</span><span>${formatCurrency(totals.subtotal)}</span></div>
+            <div class="flex justify-between text-xs text-muted"><span>IGV (18%)</span><span>${formatCurrency(totals.tax)}</span></div>
+            <div class="summary-total !border-t-0 !pt-1 !mt-0"><span>Total</span><span>${formatCurrency(totals.total)}</span></div>
+          </div>
+        `;
+      } else {
+        html += `<p class="text-xs text-dim text-center py-2">Selecciona al menos un servicio</p>`;
+      }
+
+      live.innerHTML = html;
+    }
+
+    function goToStep(step) {
+      if (step > getCurrentStep() + 1) return;
+      if (step > 1 && !validateStep(getCurrentStep())) return;
+
+      if (step === 4) renderSummary();
+      if (step === 3) renderContactFields();
+
+      document.querySelectorAll('.wizard-step').forEach(s => s.classList.add('hidden'));
+      document.querySelector(`.wizard-step[data-step="${step}"]`).classList.remove('hidden');
+
+      document.querySelectorAll('.step').forEach(s => {
+        const sNum = parseInt(s.dataset.step);
+        s.classList.remove('active', 'completed');
+        if (sNum < step) s.classList.add('completed');
+        if (sNum === step) s.classList.add('active');
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function getCurrentStep() {
+      const visible = document.querySelector('.wizard-step:not(.hidden)');
+      return parseInt(visible?.dataset.step || 1);
+    }
+
+    function setError(groupEl, msg) { setFieldError(groupEl, msg); }
+    function clearAllErrors(form) { clearErrors(form); }
+
+    function validateStep(step) {
+      const data = getReservationData();
+
+      if (step === 1) {
+        const valid = data.eventType && data.eventDate && data.eventTime && data.guests >= 10;
+        if (!valid) {
+          showToast('Completa todos los campos del evento', 'warning');
+          if (!data.eventType) setError(document.getElementById('eventType').closest('.form-group'), 'Selecciona un tipo');
+          if (!data.eventDate) setError(document.getElementById('eventDate').closest('.form-group'), 'Fecha requerida');
+          if (!data.eventTime) setError(document.getElementById('eventTime').closest('.form-group'), 'Hora requerida');
+          if (data.guests < 10) setError(document.getElementById('guests').closest('.form-group'), 'Mínimo 10 invitados');
+          return false;
+        }
+        return true;
+      }
+
+      if (step === 2) {
+        if (selectedServices.length === 0) {
+          showToast('Selecciona al menos un servicio', 'warning');
+          return false;
+        }
+        return true;
+      }
+
+      if (step === 3) {
+        const c = data.contactInfo;
+        if (!c.name || !c.email || !c.phone) {
+          showToast('Completa tus datos de contacto', 'warning');
+          return false;
+        }
+        if (!validateEmail(c.email)) {
+          showToast('Email inválido', 'warning');
+          return false;
+        }
+        return true;
+      }
+
+      return true;
+    }
+
+    function renderContactFields() {
+      const currentUser = getCurrentUser();
+      const container = document.getElementById('contactFields');
+      container.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="form-group">
+            <label class="form-label">Nombre completo *</label>
+            <input type="text" id="contactName" class="input-elegant" value="${currentUser ? currentUser.name : ''}" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Teléfono *</label>
+            <input type="tel" id="contactPhone" class="input-elegant" placeholder="+51 999 888 777" value="${currentUser ? currentUser.phone : ''}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Correo electrónico *</label>
+          <input type="email" id="contactEmail" class="input-elegant" placeholder="tu@email.com" value="${currentUser ? currentUser.email : ''}" />
+        </div>
+      `;
+    }
+
+    function renderSummary() {
+      const data = getReservationData();
+      const totals = calculateTotal(selectedServices);
+      const container = document.getElementById('reservationSummary');
+
+      container.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div class="card-detail">
+            <h4 class="text-xs uppercase tracking-wider text-gold mb-2">Evento</h4>
+            <p class="font-serif text-lg">${getEventTypeLabel(data.eventType)}</p>
+            <p class="text-sm text-muted mt-1">${formatDate(data.eventDate)} · ${data.eventTime}</p>
+            <p class="text-sm text-muted">${data.guests} invitados</p>
+          </div>
+          <div class="card-detail">
+            <h4 class="text-xs uppercase tracking-wider text-gold mb-2">Contacto</h4>
+            <p class="font-serif text-base">${data.contactInfo.name}</p>
+            <p class="text-sm text-muted">${data.contactInfo.email}</p>
+            <p class="text-sm text-muted">${data.contactInfo.phone}</p>
+          </div>
+        </div>
+
+        <div class="card-detail">
+          <h4 class="text-xs uppercase tracking-wider text-gold mb-3">Servicios contratados</h4>
+          <table class="table-elegant">
+            <thead>
+              <tr><th>Servicio</th><th class="text-right">Cant.</th><th class="text-right">Precio</th><th class="text-right">Subtotal</th></tr>
+            </thead>
+            <tbody>
+              ${selectedServices.map(s => `
+                <tr>
+                  <td>${s.name}</td>
+                  <td class="text-right">${s.qty}</td>
+                  <td class="text-right">${formatCurrency(s.price)}</td>
+                  <td class="text-right font-semibold">${formatCurrency(s.price * s.qty)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+          <div class="mt-4 space-y-1">
+            <div class="summary-row"><span>Subtotal</span><span>${formatCurrency(totals.subtotal)}</span></div>
+            <div class="summary-row"><span>IGV (18%)</span><span>${formatCurrency(totals.tax)}</span></div>
+            <div class="summary-total"><span>Total</span><span>${formatCurrency(totals.total)}</span></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function confirmReservation() {
+      const data = getReservationData();
+      if (!validateStep(1) || !validateStep(2) || !validateStep(3)) return;
+      try {
+        const reservation = createReservation(data);
+        localStorage.setItem('salon_lastReservationId', reservation.id);
+        showToast('¡Reserva creada con éxito!', 'success', 1500);
+        setTimeout(() => { window.location.href = `confirmation.html?id=${reservation.id}`; }, 800);
+      } catch (e) {
+        showToast('Error al crear la reserva', 'error');
+        console.error(e);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initLayout('reservation');
+      renderServicesPicker();
+
+      ['eventType', 'eventDate', 'eventTime', 'guests'].forEach(id => {
+        const el = document.getElementById(id);
+        el.addEventListener('change', () => {
+          el.closest('.form-group')?.classList.remove('error');
+          updateLiveSummary();
+          if (id === 'guests') renderServicesPicker();
+        });
+        el.addEventListener('input', () => {
+          el.closest('.form-group')?.classList.remove('error');
+          updateLiveSummary();
+        });
+      });
+    });
+  </script>
+</body>
+</html>

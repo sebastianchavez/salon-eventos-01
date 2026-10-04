@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalle de reserva · Aurum·Salón</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { gold: { DEFAULT: '#c9a55c', light: '#e6c887', dark: '#8a7236' }, ink: { DEFAULT: '#0f0f10', alt: '#1a1a1c', soft: '#242427', elev: '#2a2a2d' } }, fontFamily: { serif: ['Playfair Display', 'Georgia', 'serif'], sans: ['Inter', 'system-ui', 'sans-serif'] } } }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body class="bg-base text-text">
+  <header id="navbar"></header>
+
+  <main class="py-10">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- BREADCRUMB -->
+      <nav class="flex items-center gap-2 text-sm text-muted mb-4 fade-in">
+        <a href="profile.html" class="hover:text-gold inline-flex items-center gap-1">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          Mis reservas
+        </a>
+        <span>/</span>
+        <span class="text-gold" id="breadcrumbId">RES-———————</span>
+      </nav>
+
+      <!-- HEADER -->
+      <div class="card p-6 mb-6 fade-in">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="text-xs text-dim uppercase tracking-wider">Código de reserva</span>
+            <h1 class="font-serif text-3xl md:text-4xl text-gold font-bold tracking-wider" id="reservationId">RES-———————</h1>
+            <p class="text-sm text-muted mt-1">Creada el <span id="createdAt">—</span></p>
+          </div>
+          <div class="flex flex-col items-start md:items-end gap-2">
+            <span id="statusBadge"></span>
+            <div id="actionButtons" class="flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="reservationContent" class="grid grid-cols-1 lg:grid-cols-3 gap-6"></div>
+    </div>
+  </main>
+
+  <footer id="footer"></footer>
+
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/reservations.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    let currentReservation = null;
+
+    function loadDetail() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      if (!id) {
+        document.querySelector('main').innerHTML = `
+          <div class="max-w-md mx-auto text-center py-20">
+            <i data-lucide="alert-circle" class="w-16 h-16 text-red-400 mx-auto mb-4"></i>
+            <h2 class="font-serif text-2xl mb-2">Reserva no encontrada</h2>
+            <a href="profile.html" class="btn btn-primary">Ver mis reservas</a>
+          </div>`;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        return;
+      }
+
+      const res = getReservationById(id);
+      if (!res) {
+        document.querySelector('main').innerHTML = `
+          <div class="max-w-md mx-auto text-center py-20">
+            <i data-lucide="alert-circle" class="w-16 h-16 text-red-400 mx-auto mb-4"></i>
+            <h2 class="font-serif text-2xl mb-2">Reserva no encontrada</h2>
+            <a href="profile.html" class="btn btn-primary">Ver mis reservas</a>
+          </div>`;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        return;
+      }
+
+      const user = getCurrentUser();
+      if (!user || (res.userId !== user.id && res.userId !== 'GUEST')) {
+        showToast('No tienes permiso para ver esta reserva', 'error');
+        setTimeout(() => { window.location.href = 'login.html'; }, 800);
+        return;
+      }
+
+      currentReservation = res;
+      document.getElementById('reservationId').textContent = res.id;
+      document.getElementById('breadcrumbId').textContent = res.id;
+      document.getElementById('createdAt').textContent = formatDate(res.createdAt, true);
+      document.getElementById('statusBadge').innerHTML = getReservationStatusBadge(res.status);
+
+      renderActions(res);
+      renderContent(res);
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function renderActions(res) {
+      const container = document.getElementById('actionButtons');
+      container.innerHTML = '';
+
+      if (res.status === 'pending_payment') {
+        container.innerHTML = `
+          <a href="payment.html?id=${res.id}" class="btn btn-primary !py-2 !px-4 text-sm">
+            <i data-lucide="credit-card" class="w-4 h-4"></i> Pagar ahora
+          </a>
+          <button onclick="confirmCancel()" class="btn btn-danger !py-2 !px-4 text-sm">
+            <i data-lucide="x-circle" class="w-4 h-4"></i> Anular reserva
+          </button>`;
+      } else if (res.status === 'paid') {
+        container.innerHTML = `
+          <button onclick="confirmCancel()" class="btn btn-danger !py-2 !px-4 text-sm">
+            <i data-lucide="x-circle" class="w-4 h-4"></i> Anular reserva
+          </button>
+          <button onclick="window.print()" class="btn btn-ghost !py-2 !px-4 text-sm">
+            <i data-lucide="printer" class="w-4 h-4"></i> Imprimir
+          </button>`;
+      } else if (res.status === 'cancelled') {
+        container.innerHTML = `
+          <span class="text-xs text-muted italic flex items-center gap-2"><i data-lucide="info" class="w-4 h-4"></i> Esta reserva fue anulada</span>`;
+      } else {
+        container.innerHTML = `<button onclick="window.print()" class="btn btn-ghost !py-2 !px-4 text-sm"><i data-lucide="printer" class="w-4 h-4"></i> Imprimir comprobante</button>`;
+      }
+    }
+
+    function renderContent(res) {
+      const container = document.getElementById('reservationContent');
+      const isCancelled = res.status === 'cancelled';
+      const isPaid = res.status === 'paid';
+
+      container.innerHTML = `
+        <div class="lg:col-span-2 space-y-6">
+          <!-- DATOS DEL EVENTO -->
+          <div class="card p-6">
+            <h3 class="font-serif text-lg mb-4 flex items-center gap-2">
+              <i data-lucide="calendar" class="w-5 h-5 text-gold"></i>
+              Datos del evento
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <div class="text-xs text-dim uppercase mb-1">Tipo</div>
+                <div class="font-semibold">${getEventTypeLabel(res.eventType)}</div>
+              </div>
+              <div>
+                <div class="text-xs text-dim uppercase mb-1">Fecha y hora</div>
+                <div class="font-semibold">${formatDate(res.eventDate)}</div>
+                <div class="text-sm text-muted">${res.eventTime} hrs</div>
+              </div>
+              <div>
+                <div class="text-xs text-dim uppercase mb-1">Invitados</div>
+                <div class="font-semibold">${res.guests} personas</div>
+              </div>
+              <div>
+                <div class="text-xs text-dim uppercase mb-1">Lugar</div>
+                <div class="font-semibold">Aurum·Salón</div>
+                <div class="text-sm text-muted">Av. El Sol 123, Cusco</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SERVICIOS -->
+          <div class="card p-6">
+            <h3 class="font-serif text-lg mb-4 flex items-center gap-2">
+              <i data-lucide="list" class="w-5 h-5 text-gold"></i>
+              Servicios contratados
+            </h3>
+            <table class="table-elegant">
+              <thead>
+                <tr>
+                  <th>Servicio</th>
+                  <th class="text-right">Cant.</th>
+                  <th class="text-right">Precio</th>
+                  <th class="text-right">Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${res.services.map(s => `
+                  <tr>
+                    <td>${s.name}</td>
+                    <td class="text-right">${s.qty}</td>
+                    <td class="text-right">${formatCurrency(s.price)}</td>
+                    <td class="text-right font-semibold">${formatCurrency(s.price * s.qty)}</td>
+                  </tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- DATOS DE CONTACTO -->
+          <div class="card p-6">
+            <h3 class="font-serif text-lg mb-4 flex items-center gap-2">
+              <i data-lucide="user" class="w-5 h-5 text-gold"></i>
+              Datos del cliente
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <div class="text-xs text-dim uppercase mb-1">Nombre</div>
+                <div class="font-semibold">${res.contactInfo.name}</div>
+              </div>
+              <div>
+                <div class="text-xs text-dim uppercase mb-1">Teléfono</div>
+                <div class="font-semibold">${res.contactInfo.phone}</div>
+              </div>
+              <div class="md:col-span-2">
+                <div class="text-xs text-dim uppercase mb-1">Correo</div>
+                <div class="font-semibold">${res.contactInfo.email}</div>
+              </div>
+              ${res.contactInfo.notes ? `
+                <div class="md:col-span-2">
+                  <div class="text-xs text-dim uppercase mb-1">Comentarios</div>
+                  <div class="text-sm text-muted italic">"${res.contactInfo.notes}"</div>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        </div>
+
+        <!-- RESUMEN Y PAGO -->
+        <aside class="lg:col-span-1 space-y-6">
+          <div class="summary-box sticky top-20">
+            <h3 class="font-serif text-lg mb-4 flex items-center gap-2">
+              <i data-lucide="receipt" class="w-5 h-5 text-gold"></i>
+              Resumen
+            </h3>
+            <div class="summary-row"><span>Subtotal</span><span>${formatCurrency(res.subtotal)}</span></div>
+            <div class="summary-row"><span>IGV (18%)</span><span>${formatCurrency(res.tax)}</span></div>
+            <div class="summary-total"><span>Total</span><span>${formatCurrency(res.total)}</span></div>
+
+            ${res.payment ? `
+              <div class="divider-gold my-4"></div>
+              <div class="space-y-2">
+                <div class="text-xs text-dim uppercase">Información de pago</div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-muted">Método</span>
+                  <span class="font-semibold">Visa •••• ${res.payment.cardLast4}</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-muted">Fecha de pago</span>
+                  <span>${formatDate(res.payment.paidAt, true)}</span>
+                </div>
+              </div>
+            ` : ''}
+
+            ${isCancelled ? `
+              <div class="divider-gold my-4"></div>
+              <div class="text-xs text-dim uppercase mb-1">Anulada el</div>
+              <div class="text-sm">${formatDate(res.cancelledAt, true)}</div>
+            ` : ''}
+          </div>
+
+          ${res.status === 'pending_payment' ? `
+            <div class="card p-4 text-sm">
+              <div class="flex items-start gap-2 text-yellow-400">
+                <i data-lucide="alert-triangle" class="w-5 h-5 flex-shrink-0 mt-0.5"></i>
+                <div>
+                  <strong>Pago pendiente</strong>
+                  <p class="text-muted mt-1">Tienes 48 horas para completar el pago o la reserva será cancelada automáticamente.</p>
+                </div>
+              </div>
+            </div>
+          ` : ''}
+        </aside>
+      `;
+    }
+
+    function confirmCancel() {
+      if (!currentReservation) return;
+
+      openModal(`
+        <div class="p-6">
+          <div class="text-center mb-4">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-full mb-3" style="background: rgba(239, 68, 68, 0.15);">
+              <i data-lucide="alert-triangle" class="w-7 h-7 text-red-400"></i>
+            </div>
+            <h3 class="font-serif text-xl">¿Anular esta reserva?</h3>
+          </div>
+          <div class="bg-soft p-4 rounded-lg mb-4 text-muted text-sm">
+            <p class="mb-2"><strong class="text-text">Reserva:</strong> ${currentReservation.id}</p>
+            <p class="mb-2"><strong class="text-text">Evento:</strong> ${getEventTypeLabel(currentReservation.eventType)} - ${formatDate(currentReservation.eventDate)}</p>
+            <p><strong class="text-text">Monto:</strong> ${formatCurrency(currentReservation.total)}</p>
+          </div>
+
+          ${currentReservation.status === 'paid' ? `
+            <div class="p-3 rounded-lg mb-4" style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245,158,11,0.3);">
+              <p class="text-xs text-muted"><strong class="text-yellow-400">Política de reembolso:</strong> Si cancelas con más de 30 días de anticipación al evento, se te reembolsará el 50% del monto pagado. Pasado ese plazo no hay derecho a reembolso.</p>
+            </div>
+          ` : ''}
+
+          <div class="form-group">
+            <label class="form-label">Motivo de cancelación (opcional)</label>
+            <textarea id="cancelReason" class="textarea-elegant" rows="2" placeholder="Indica el motivo..."></textarea>
+          </div>
+
+          <div class="flex gap-2 mt-4">
+            <button class="btn btn-ghost flex-1" onclick="closeModal()">Mantener reserva</button>
+            <button class="btn btn-danger flex-1" onclick="doCancel()">
+              <i data-lucide="trash-2" class="w-4 h-4"></i> Sí, anular
+            </button>
+          </div>
+        </div>
+      `);
+    }
+
+    function doCancel() {
+      if (!currentReservation) return;
+      cancelReservation(currentReservation.id);
+      closeModal();
+      showToast('Reserva anulada con éxito', 'success', 1500);
+      setTimeout(() => { loadDetail(); }, 500);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!requireAuth()) return;
+      initLayout('profile');
+      loadDetail();
+    });
+  </script>
+</body>
+</html>
