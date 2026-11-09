@@ -123,11 +123,11 @@ Además, este usuario ya tiene **2 reservas** precargadas (una pagada y otra pen
   eventTime: "19:00",
   guests: 150,
   services: [
-    { id: "S01", name: "Alquiler Salón Premium", qty: 1, price: 5500 }
+    { id: "S01", name: "Alquiler Salón Premium", qty: 1, price: 1375000 }
   ],
-  subtotal: 11750,
+  subtotal: 2937500,
   tax: 2115,
-  total: 13865,
+  total: 3466250,
   status: "pending_payment" | "paid" | "cancelled" | "completed",
   contactInfo: { name, email, phone, notes },
   payment: { method, cardLast4, paidAt } | null,
@@ -171,7 +171,7 @@ Edita el array `CATALOG_SERVICES` en `assets/js/storage.js`. Cada servicio requi
   id: 'SXX',
   name: 'Nombre del servicio',
   category: 'salon' | 'gastronomia' | 'decoracion' | 'musica' | 'audiovisual' | 'servicio',
-  price: 1000,
+  price: 250000,
   unit: 'evento' | 'persona' | 'unidad' | 'silla',
   description: 'Descripción detallada',
   icon: 'nombre-icono-lucide'

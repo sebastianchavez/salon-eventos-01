@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-CL">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -168,6 +168,7 @@
 
         <div class="border-t border-subtle pt-4 mb-4">
           <h4 class="text-xs uppercase tracking-wider text-gold mb-3">Detalle de servicios</h4>
+          <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Detalle de servicios">
           <table class="table-elegant">
             <thead>
               <tr><th>Descripción</th><th class="text-right">Cant.</th><th class="text-right">Subtotal</th></tr>
@@ -181,11 +182,12 @@
                 </tr>`).join('')}
             </tbody>
           </table>
+          </div>
         </div>
 
         <div class="summary-box">
           <div class="summary-row"><span>Subtotal</span><span>${formatCurrency(res.subtotal)}</span></div>
-          <div class="summary-row"><span>IGV (18%)</span><span>${formatCurrency(res.tax)}</span></div>
+          <div class="summary-row"><span>IVA (19%)</span><span>${formatCurrency(res.tax)}</span></div>
           <div class="summary-total"><span>Total pagado</span><span>${formatCurrency(res.total)}</span></div>
         </div>
 

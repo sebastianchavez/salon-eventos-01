@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-CL">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -162,7 +162,7 @@
               <div>
                 <div class="text-xs text-dim uppercase mb-1">Lugar</div>
                 <div class="font-semibold">Aurum·Salón</div>
-                <div class="text-sm text-muted">Av. El Sol 123, Cusco</div>
+                <div class="text-sm text-muted">Av. El Sol 123, Pucón</div>
               </div>
             </div>
           </div>
@@ -173,6 +173,7 @@
               <i data-lucide="list" class="w-5 h-5 text-gold"></i>
               Servicios contratados
             </h3>
+            <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Servicios contratados">
             <table class="table-elegant">
               <thead>
                 <tr>
@@ -192,6 +193,7 @@
                   </tr>`).join('')}
               </tbody>
             </table>
+            </div>
           </div>
 
           <!-- DATOS DE CONTACTO -->
@@ -231,7 +233,7 @@
               Resumen
             </h3>
             <div class="summary-row"><span>Subtotal</span><span>${formatCurrency(res.subtotal)}</span></div>
-            <div class="summary-row"><span>IGV (18%)</span><span>${formatCurrency(res.tax)}</span></div>
+            <div class="summary-row"><span>IVA (19%)</span><span>${formatCurrency(res.tax)}</span></div>
             <div class="summary-total"><span>Total</span><span>${formatCurrency(res.total)}</span></div>
 
             ${res.payment ? `

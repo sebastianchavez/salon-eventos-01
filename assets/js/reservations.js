@@ -1,4 +1,4 @@
-const TAX_RATE = 0.18;
+const TAX_RATE = 0.19;
 
 function generateReservationId() {
   const now = new Date();

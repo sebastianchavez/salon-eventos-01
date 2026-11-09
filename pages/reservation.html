@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-CL">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -165,7 +165,7 @@
             </div>
 
             <div class="divider-gold my-4"></div>
-            <p class="text-xs text-dim text-center">Precios incluyen IGV (18%)</p>
+            <p class="text-xs text-dim text-center">Precios netos en CLP · IVA (19%) desglosado al confirmar</p>
           </div>
         </aside>
       </div>
@@ -297,7 +297,7 @@
         html += `
           <div class="space-y-1 pt-2 border-t border-subtle">
             <div class="flex justify-between text-xs text-muted"><span>Subtotal</span><span>${formatCurrency(totals.subtotal)}</span></div>
-            <div class="flex justify-between text-xs text-muted"><span>IGV (18%)</span><span>${formatCurrency(totals.tax)}</span></div>
+            <div class="flex justify-between text-xs text-muted"><span>IVA (19%)</span><span>${formatCurrency(totals.tax)}</span></div>
             <div class="summary-total !border-t-0 !pt-1 !mt-0"><span>Total</span><span>${formatCurrency(totals.total)}</span></div>
           </div>
         `;
@@ -387,7 +387,7 @@
           </div>
           <div class="form-group">
             <label class="form-label">Teléfono *</label>
-            <input type="tel" id="contactPhone" class="input-elegant" placeholder="+51 999 888 777" value="${currentUser ? currentUser.phone : ''}" />
+            <input type="tel" id="contactPhone" class="input-elegant" placeholder="+56 9 9988 8777" value="${currentUser ? currentUser.phone : ''}" />
           </div>
         </div>
         <div class="form-group">
@@ -420,6 +420,7 @@
 
         <div class="card-detail">
           <h4 class="text-xs uppercase tracking-wider text-gold mb-3">Servicios contratados</h4>
+          <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Detalle de servicios">
           <table class="table-elegant">
             <thead>
               <tr><th>Servicio</th><th class="text-right">Cant.</th><th class="text-right">Precio</th><th class="text-right">Subtotal</th></tr>
@@ -435,9 +436,10 @@
               `).join('')}
             </tbody>
           </table>
+          </div>
           <div class="mt-4 space-y-1">
             <div class="summary-row"><span>Subtotal</span><span>${formatCurrency(totals.subtotal)}</span></div>
-            <div class="summary-row"><span>IGV (18%)</span><span>${formatCurrency(totals.tax)}</span></div>
+            <div class="summary-row"><span>IVA (19%)</span><span>${formatCurrency(totals.tax)}</span></div>
             <div class="summary-total"><span>Total</span><span>${formatCurrency(totals.total)}</span></div>
           </div>
         </div>

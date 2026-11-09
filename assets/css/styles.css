@@ -716,3 +716,7 @@ main, header, footer { position: relative; z-index: 1; }
 @media (min-width: 769px) {
   .mobile-only { display: none !important; }
 }
+h1, h2 { overflow-wrap: anywhere; }
+
+.grid > * { min-width: 0; }
+

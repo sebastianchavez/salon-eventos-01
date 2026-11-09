@@ -1,28 +1,28 @@
 const STORAGE_KEYS = {
-  USERS: 'salon_users',
-  CURRENT_USER: 'salon_currentUser',
-  RESERVATIONS: 'salon_reservations',
-  SERVICES: 'salon_services',
-  SCHEMA_VERSION: 'salon_schemaVersion'
+  USERS: 'salon_users_clp_v1',
+  CURRENT_USER: 'salon_currentUser_clp_v1',
+  RESERVATIONS: 'salon_reservations_clp_v1',
+  SERVICES: 'salon_services_clp_v1',
+  SCHEMA_VERSION: 'salon_schemaVersion_clp_v1'
 };
 
 const SCHEMA_VERSION = '1.0.0';
 
 const CATALOG_SERVICES = [
-  { id: 'S01', name: 'Alquiler Salón Premium', category: 'salon', price: 5500, unit: 'evento', description: 'Salón principal con capacidad hasta 250 personas, iluminación LED y sistema de sonido integrado.', icon: 'building' },
-  { id: 'S02', name: 'Alquiler Salón Íntimo', category: 'salon', price: 3200, unit: 'evento', description: 'Espacio acogedor para eventos de hasta 80 personas, ideal para reuniones familiares.', icon: 'home' },
-  { id: 'S03', name: 'Catering Buffet Premium', category: 'gastronomia', price: 85, unit: 'persona', description: 'Buffet completo con entrada, plato fuerte, postre y bebida. Chef especializado en eventos.', icon: 'utensils' },
-  { id: 'S04', name: 'Catering Plato Servido', category: 'gastronomia', price: 120, unit: 'persona', description: 'Servicio de mesa con menú gourmet de 3 tiempos y maridaje.', icon: 'utensils-crossed' },
-  { id: 'S05', name: 'Decoración Clásica', category: 'decoracion', price: 1800, unit: 'evento', description: 'Centros de mesa, arreglos florales y ambientación elegante.', icon: 'flower' },
-  { id: 'S06', name: 'Decoración Temática', category: 'decoracion', price: 2800, unit: 'evento', description: 'Decoración personalizada según la temática de tu evento.', icon: 'sparkles' },
-  { id: 'S07', name: 'DJ Profesional', category: 'musica', price: 1200, unit: 'evento', description: 'DJ con equipo de sonido profesional y luces LED. 5 horas incluidas.', icon: 'music' },
-  { id: 'S08', name: 'Banda en Vivo', category: 'musica', price: 3500, unit: 'evento', description: 'Banda musical versátil con repertorio personalizado.', icon: 'music-2' },
-  { id: 'S09', name: 'Fotografía Profesional', category: 'audiovisual', price: 1500, unit: 'evento', description: 'Cobertura completa con fotógrafo profesional y entrega digital.', icon: 'camera' },
-  { id: 'S10', name: 'Video y Edición', category: 'audiovisual', price: 2200, unit: 'evento', description: 'Video cinematográfico del evento con edición profesional y drone.', icon: 'video' },
-  { id: 'S11', name: 'Torta Personalizada', category: 'gastronomia', price: 450, unit: 'unidad', description: 'Torta de fondant diseñada a medida, hasta 3 pisos.', icon: 'cake' },
-  { id: 'S12', name: 'Mobiliario Adicional', category: 'salon', price: 35, unit: 'silla', description: 'Sillas Tiffany, mesas rectangulares y redondas adicionales.', icon: 'armchair' },
-  { id: 'S13', name: 'Coordinación del Evento', category: 'servicio', price: 800, unit: 'evento', description: 'Coordinador profesional que gestiona todos los detalles el día del evento.', icon: 'clipboard-list' },
-  { id: 'S14', name: 'Barra de Cocteles', category: 'gastronomia', price: 950, unit: 'evento', description: 'Bartender profesional con barra móvil y coctelería de autor.', icon: 'glass-water' }
+  { id: 'S01', name: 'Alquiler Salón Premium', category: 'salon', price: 1375000, unit: 'evento', description: 'Salón principal con capacidad hasta 250 personas, iluminación LED y sistema de sonido integrado.', icon: 'building' },
+  { id: 'S02', name: 'Alquiler Salón Íntimo', category: 'salon', price: 800000, unit: 'evento', description: 'Espacio acogedor para eventos de hasta 80 personas, ideal para reuniones familiares.', icon: 'home' },
+  { id: 'S03', name: 'Catering Buffet Premium', category: 'gastronomia', price: 21250, unit: 'persona', description: 'Buffet completo con entrada, plato fuerte, postre y bebida. Chef especializado en eventos.', icon: 'utensils' },
+  { id: 'S04', name: 'Catering Plato Servido', category: 'gastronomia', price: 30000, unit: 'persona', description: 'Servicio de mesa con menú gourmet de 3 tiempos y maridaje.', icon: 'utensils-crossed' },
+  { id: 'S05', name: 'Decoración Clásica', category: 'decoracion', price: 450000, unit: 'evento', description: 'Centros de mesa, arreglos florales y ambientación elegante.', icon: 'flower' },
+  { id: 'S06', name: 'Decoración Temática', category: 'decoracion', price: 700000, unit: 'evento', description: 'Decoración personalizada según la temática de tu evento.', icon: 'sparkles' },
+  { id: 'S07', name: 'DJ Profesional', category: 'musica', price: 300000, unit: 'evento', description: 'DJ con equipo de sonido profesional y luces LED. 5 horas incluidas.', icon: 'music' },
+  { id: 'S08', name: 'Banda en Vivo', category: 'musica', price: 875000, unit: 'evento', description: 'Banda musical versátil con repertorio personalizado.', icon: 'music-2' },
+  { id: 'S09', name: 'Fotografía Profesional', category: 'audiovisual', price: 375000, unit: 'evento', description: 'Cobertura completa con fotógrafo profesional y entrega digital.', icon: 'camera' },
+  { id: 'S10', name: 'Video y Edición', category: 'audiovisual', price: 550000, unit: 'evento', description: 'Video cinematográfico del evento con edición profesional y drone.', icon: 'video' },
+  { id: 'S11', name: 'Torta Personalizada', category: 'gastronomia', price: 112500, unit: 'unidad', description: 'Torta de fondant diseñada a medida, hasta 3 pisos.', icon: 'cake' },
+  { id: 'S12', name: 'Mobiliario Adicional', category: 'salon', price: 8750, unit: 'silla', description: 'Sillas Tiffany, mesas rectangulares y redondas adicionales.', icon: 'armchair' },
+  { id: 'S13', name: 'Coordinación del Evento', category: 'servicio', price: 200000, unit: 'evento', description: 'Coordinador profesional que gestiona todos los detalles el día del evento.', icon: 'clipboard-list' },
+  { id: 'S14', name: 'Barra de Cocteles', category: 'gastronomia', price: 237500, unit: 'evento', description: 'Bartender profesional con barra móvil y coctelería de autor.', icon: 'glass-water' }
 ];
 
 function checkSchema() {
@@ -125,7 +125,7 @@ function seedData() {
       id: 'USR-001',
       name: 'María González',
       email: 'demo@salon.com',
-      phone: '+51 999 888 777',
+      phone: '+56 9 9988 8777',
       password: simpleHash('demo123'),
       createdAt: new Date().toISOString()
     };
@@ -144,14 +144,14 @@ function seedData() {
           eventTime: '19:00',
           guests: 180,
           services: [
-            { id: 'S01', name: 'Alquiler Salón Premium', qty: 1, price: 5500 },
-            { id: 'S03', name: 'Catering Buffet Premium', qty: 180, price: 85 },
-            { id: 'S05', name: 'Decoración Clásica', qty: 1, price: 1800 },
-            { id: 'S07', name: 'DJ Profesional', qty: 1, price: 1200 }
+            { id: 'S01', name: 'Alquiler Salón Premium', qty: 1, price: 1375000 },
+            { id: 'S03', name: 'Catering Buffet Premium', qty: 180, price: 21250 },
+            { id: 'S05', name: 'Decoración Clásica', qty: 1, price: 450000 },
+            { id: 'S07', name: 'DJ Profesional', qty: 1, price: 300000 }
           ],
-          subtotal: 23800,
-          tax: 4274,
-          total: 28074,
+          subtotal: 5950000,
+          tax: 1130500,
+          total: 7080500,
           status: 'paid',
           contactInfo: { name: user.name, email: user.email, phone: user.phone, notes: 'Boda al aire libre con ceremonia.' },
           payment: { method: 'credit_card', cardLast4: '4242', paidAt: '2026-08-22T14:30:00.000Z' },
@@ -166,14 +166,14 @@ function seedData() {
           eventTime: '20:00',
           guests: 60,
           services: [
-            { id: 'S02', name: 'Alquiler Salón Íntimo', qty: 1, price: 3200 },
-            { id: 'S04', name: 'Catering Plato Servido', qty: 60, price: 120 },
-            { id: 'S06', name: 'Decoración Temática', qty: 1, price: 2800 },
-            { id: 'S11', name: 'Torta Personalizada', qty: 1, price: 450 }
+            { id: 'S02', name: 'Alquiler Salón Íntimo', qty: 1, price: 800000 },
+            { id: 'S04', name: 'Catering Plato Servido', qty: 60, price: 30000 },
+            { id: 'S06', name: 'Decoración Temática', qty: 1, price: 700000 },
+            { id: 'S11', name: 'Torta Personalizada', qty: 1, price: 112500 }
           ],
-          subtotal: 13650,
-          tax: 2451,
-          total: 16101,
+          subtotal: 3412500,
+          tax: 648375,
+          total: 4060875,
           status: 'pending_payment',
           contactInfo: { name: user.name, email: user.email, phone: user.phone, notes: 'Cumpleaños temático de los 30.' },
           payment: null,

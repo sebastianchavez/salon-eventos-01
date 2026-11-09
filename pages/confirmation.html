@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-CL">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -91,7 +91,7 @@
       </div>
 
       <p class="text-center text-xs text-dim mt-6">
-        ¿Necesitas ayuda? Escríbenos a <a href="mailto:contacto@aurum.com" class="text-gold hover:underline">contacto@aurum.com</a> o llámanos al +51 84 123 456
+        ¿Necesitas ayuda? Escríbenos a <a href="mailto:contacto@aurum.com" class="text-gold hover:underline">contacto@aurum.com</a> o llámanos al +56 2 2123 0456
       </p>
     </div>
   </main>
@@ -162,7 +162,7 @@
             <div>
               <div class="text-xs text-dim uppercase">Lugar</div>
               <div class="font-semibold">Aurum·Salón</div>
-              <div class="text-xs text-muted">Av. El Sol 123, Cusco</div>
+              <div class="text-xs text-muted">Av. El Sol 123, Pucón</div>
             </div>
           </div>
         </div>
@@ -171,6 +171,7 @@
 
         <div>
           <h4 class="text-xs uppercase tracking-wider text-gold mb-3">Servicios contratados</h4>
+          <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Detalle de servicios">
           <table class="table-elegant">
             <thead><tr><th>Servicio</th><th class="text-right">Cant.</th><th class="text-right">Subtotal</th></tr></thead>
             <tbody>
@@ -182,11 +183,12 @@
                 </tr>`).join('')}
             </tbody>
           </table>
+          </div>
         </div>
 
         <div class="summary-box">
           <div class="summary-row"><span>Subtotal</span><span>${formatCurrency(res.subtotal)}</span></div>
-          <div class="summary-row"><span>IGV (18%)</span><span>${formatCurrency(res.tax)}</span></div>
+          <div class="summary-row"><span>IVA (19%)</span><span>${formatCurrency(res.tax)}</span></div>
           <div class="summary-total"><span>Total a pagar</span><span>${formatCurrency(res.total)}</span></div>
         </div>
       `;

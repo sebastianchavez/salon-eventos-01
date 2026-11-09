@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-CL">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -173,7 +173,7 @@
                 <span id="subtotalAmount">—</span>
               </div>
               <div class="flex justify-between text-muted">
-                <span>IGV (18%)</span>
+                <span>IVA (19%)</span>
                 <span id="taxAmount">—</span>
               </div>
               <div class="summary-total !pt-2">
@@ -309,6 +309,7 @@
       if (!requireAuth()) return;
       initLayout('profile');
       loadReservation();
+      if (!currentReservation) return;
       if (typeof lucide !== 'undefined') lucide.createIcons();
 
       const cardNumber = document.getElementById('cardNumber');

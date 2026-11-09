@@ -1,5 +1,5 @@
 function formatCurrency(amount) {
-  return 'S/ ' + Number(amount).toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return 'CLP$ ' + Number(amount).toLocaleString('es-CL', { maximumFractionDigits: 0 });
 }
 
 function formatDate(dateStr, withTime = false) {
@@ -7,7 +7,7 @@ function formatDate(dateStr, withTime = false) {
   const d = new Date(dateStr);
   if (isNaN(d.getTime())) return dateStr;
   const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-  const formatted = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  let formatted = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
   if (withTime) {
     formatted += ` ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
   }
@@ -193,8 +193,8 @@ function renderFooter() {
           <div>
             <h4 class="font-serif text-gold mb-4 text-base">Contacto</h4>
             <ul class="space-y-2 text-sm text-muted">
-              <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-gold"></i>Av. El Sol 123, Cusco</li>
-              <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-gold"></i>+51 84 123 456</li>
+              <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-gold"></i>Av. El Sol 123, Pucón</li>
+              <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-gold"></i>+56 2 2123 0456</li>
               <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-gold"></i>contacto@aurum.com</li>
             </ul>
           </div>
